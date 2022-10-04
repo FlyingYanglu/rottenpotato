@@ -14,6 +14,14 @@ class MoviesController < ApplicationController
         @ratings_to_show = Movie.all_ratings
       end
       @movies = Movie.with_ratings(@ratings_to_show)
+      if params[:sort_release] != nil
+        @movies = @movies.order("release_date")
+        @sort_release_css = "hilite bg-warning"
+      end
+      if params[:sort_title] != nil
+        @movies = @movies.order("title")
+        @sort_title_css = "hilite bg-warning"
+      end
     end
   
     def new
