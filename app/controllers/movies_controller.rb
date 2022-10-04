@@ -8,6 +8,17 @@ class MoviesController < ApplicationController
   
     def index
       @all_ratings = Movie.all_ratings
+      if params[:ratings] == nil && params[:sort_release] == nil && params[:sort_title] == nil
+        if session.keys != nil
+          params[:ratings] = session[:ratings]
+          params[:sort_release] = session[:sort_release]
+          params[:sort_title] = session[:sort_title]
+        end
+      else
+        session[:ratings] = params[:ratings]
+        session[:sort_release] = params[:sort_release]
+        session[:sort_title] = params[:sort_title]
+      end
       if params[:ratings] != nil
         @ratings_to_show = params[:ratings].keys
       else
@@ -22,6 +33,7 @@ class MoviesController < ApplicationController
         @movies = @movies.order("title")
         @sort_title_css = "hilite bg-warning"
       end
+
     end
   
     def new
